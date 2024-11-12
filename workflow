@@ -38,6 +38,9 @@ plink --allow-extra-chr --vcf freebayes_snp.vcf --recode
 plink --allow-extra-chr --file $name --noweb --make-bed 
 plink --allow-extra-chr --threads 4 --bfile $name --pca 20 
 
+#07 Determine the supergroup classification of Wolbachia
+python StrainScan_build.py -i Wol_all -o DB_Small #Download known Wolbachia supergroup FASTA files from NCBI as a reference database
+python StrainScan.py -i ${fq1} -j ${fq2} -d DB_Small -o output/${snlong}
 
 
 
