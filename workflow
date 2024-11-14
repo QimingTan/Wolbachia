@@ -26,7 +26,7 @@ awk '{print $1}' all_50.coverage | sort | uniq -c | sort -nr | awk '$1 > 100'|wc
 
 #05 Perform freebayes analysis based on single-copy genes to obtain VCF, and extract SNP sites from the VCF
 freebayes -f Wolbachia_sco.fna -L wolbachia.list --standard-filters  > Wolbachia.vcf
-vcftools --vcf $vcf --max-missing 0.4 --minQ 10 --remove-filtered-all --recode --recode-INFO-all --stdout | vcfsnps > snp.vcf #Filters out sites with a missing rate greater than 40%，
+vcftools --vcf $vcf --max-missing 0.4 --minQ 10 --remove-filtered-all --recode --recode-INFO-all --stdout | vcfsnps > snp.vcf #Exclude sites on the basis of the proportion of missing data, 1 indicates no missing data allowed，
 #06 Select missing sites and remove unreliable samples
 vcftools --vcf snp.vcf --missing-indv
 awk '$5 > 0.4' out.imiss | cut -f1 > lowDP.indv # Remove samples with more than 40% missing genotypes.
